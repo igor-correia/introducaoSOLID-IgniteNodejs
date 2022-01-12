@@ -6,8 +6,17 @@ class ShowUserProfileController {
   constructor(private showUserProfileUseCase: ShowUserProfileUseCase) {}
 
   handle(request: Request, response: Response): Response {
-    // Complete aqui
+    const { user_id } = request.params;
+
+    try {
+      const user = this.showUserProfileUseCase.execute({user_id});
+      
+      return response.send(user);
+    } catch (e) {
+      return response.status(404).json({ error: "usuário inexistente"});
+    } 
+    
   }
 }
 
-export { ShowUserProfileController };
+export { ShowUserProfileController }; 
